@@ -1,0 +1,27 @@
+version: "3.2"
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - db-store:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  migrate:
+    build:
+      context: .
+      dockerfile: rambler.dockerfile
+    depends_on:
+      - db
+    environment:
+      - RAMBLER_DRIVER=postgresql
+      - RAMBLER_HOST=db
+      - RAMBLER_PORT=5432
+      - RAMBLER_USER=postgres
+      - RAMBLER_PASSWORD=${POSTGRES_PASSWORD}
+      - RAMBLER_DATABASE=twenty48
+      - RAMBLER_DIRECTORY=.
+      - RAMBLER_TABLE=migrations
+volumes:
+  db-store:
