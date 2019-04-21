@@ -8,6 +8,7 @@ services:
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
   migrate:
     build:
       context: .
@@ -20,7 +21,7 @@ services:
       - RAMBLER_PORT=5432
       - RAMBLER_USER=postgres
       - RAMBLER_PASSWORD=${POSTGRES_PASSWORD}
-      - RAMBLER_DATABASE=twenty48
+      - RAMBLER_DATABASE=${POSTGRES_DB}
       - RAMBLER_DIRECTORY=.
       - RAMBLER_TABLE=migrations
 volumes:
